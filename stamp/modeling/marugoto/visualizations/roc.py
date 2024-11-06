@@ -22,7 +22,7 @@ all = [
 def plot_single_decorated_roc_curve(
     ax: plt.Axes,
     y_true: npt.NDArray[np.bool_],
-    y_pred: npt.NDArray[np.float_],
+    y_pred: npt.NDArray[np.float64],
     *,
     title: Optional[str] = None,
     n_bootstrap_samples: Optional[int] = None,
@@ -66,7 +66,7 @@ TPA = namedtuple("TPA", ["true", "pred", "auc"])
 def plot_multiple_decorated_roc_curves(
     ax: plt.Axes,
     y_trues: Sequence[npt.NDArray[np.bool_]],
-    y_scores: Sequence[npt.NDArray[np.float_]],
+    y_scores: Sequence[npt.NDArray[np.float64]],
     *,
     title: Optional[str] = None,
     n_bootstrap_samples: Optional[int] = None,
@@ -115,7 +115,7 @@ def split_preds_into_groups(
     target_label: str,
     true_label: str,
     subgroup_label: str,
-) -> Mapping[str, Tuple[npt.NDArray[np.bool_], npt.NDArray[np.float_]]]:
+) -> Mapping[str, Tuple[npt.NDArray[np.bool_], npt.NDArray[np.float64]]]:
     """Splits predictions into a mapping `subgroup_name -> (y_true, y_pred)."""
     groups = {}
     for subgroup, subgroup_patients in clini_df.PATIENT.groupby(
@@ -131,7 +131,7 @@ def split_preds_into_groups(
 
 def plot_decorated_rocs_for_subtypes(
     ax: plt.Axes,
-    groups: Mapping[str, Tuple[npt.NDArray[np.bool_], npt.NDArray[np.float_]]],
+    groups: Mapping[str, Tuple[npt.NDArray[np.bool_], npt.NDArray[np.float64]]],
     *,
     target_label: str,
     true_label: str,
@@ -175,7 +175,7 @@ def plot_decorated_rocs_for_subtypes(
 def plot_bootstrapped_roc_curve(
     ax: plt.Axes,
     y_true: npt.NDArray[np.bool_],
-    y_score: npt.NDArray[np.float_],
+    y_score: npt.NDArray[np.float64],
     label: Optional[str],
     n_bootstrap_samples: Optional[int] = None,
     threshold_cmap: Optional[Colormap] = None,
@@ -239,9 +239,9 @@ def plot_bootstrapped_roc_curve(
 
 def plot_curve(
     ax: plt.Axes,
-    x: npt.NDArray[np.float_],
-    y: npt.NDArray[np.float_],
-    thresh: npt.NDArray[np.float_],
+    x: npt.NDArray[np.float64],
+    y: npt.NDArray[np.float64],
+    thresh: npt.NDArray[np.float64],
     *,
     label: Optional[str],
     threshold_cmap: Optional[Colormap] = None,
