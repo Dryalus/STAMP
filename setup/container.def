@@ -40,7 +40,7 @@ From: ubuntu:latest
         conda activate hpc_cenv
         conda install -c conda-forge libstdcxx-ng=12
         python --version
-        pip install git+https://github.com/KatherLab/STAMP
+        pip install git+https://github.com/Dryalus/STAMP
 
 %runscript
         if [ $# -ne 1 ]; then
