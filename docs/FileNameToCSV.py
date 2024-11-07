@@ -1,8 +1,8 @@
 import csv
 import os
 
-pathSlideTable = "D:/PraktikumUniKlinik/data/dataSlide/tables/slide_table.csv"
-pathFolder = "D:/PraktikumUniKlinik/data/dataSlide/tables"
+pathSlideTable = 
+pathFolder = 
 
 
 def FolderToList(path):
