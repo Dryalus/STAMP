@@ -1,8 +1,6 @@
 import csv
 import numpy as np
 
-pathTable = "D:/PraktikumUniKlinik/data/dataSlide/Statistik/Test.csv"
-
 def csvToList(path):
     list = []
     with open(path, newline='') as csvfile:
@@ -35,6 +33,7 @@ def ListCaluclate(list):
 
 
 if __name__ == "__main__":
+    pathTable = input("Enter Path to Table:")
     list = csvToList(pathTable)
     listTypName, listCounts, percentsTypes = ListCaluclate(list)
     print(listTypName)
