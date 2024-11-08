@@ -239,11 +239,13 @@ def run_cli(args: argparse.Namespace):
             c = cfg.modeling.statistics
             if isinstance(c.pred_csvs,str):
                 c.pred_csvs = [c.pred_csvs]
-            compute_stats(pred_csvs=[Path(x) for x in c.pred_csvs],
-                          target_label=c.target_label,
-                          true_class=c.true_class,
-                          output_dir=Path(c.output_dir))
-            print("Successfully calculated statistics")
+            c.true_class = c.true_class.split(',') # Add List Arguments
+            for i in c.true_class:
+                compute_stats(pred_csvs=[Path(x) for x in c.pred_csvs],
+                              target_label=c.target_label,
+                              true_class=i,
+                              output_dir=Path(c.output_dir))
+                print("Successfully calculated statistics")
         case "heatmaps":
             require_configs(
                 cfg,
