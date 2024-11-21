@@ -38,7 +38,12 @@ def main():
                                  target_label=args.target_label, 
                                  cat_labels=args.cat_labels,
                                  cont_labels=args.cont_labels, 
-                                 categories=args.categories)
+                                 categories=args.categories,
+                                 transMilDim=args.dimension,
+                                 transMilDepth=args.depth, 
+                                 transMilheads=args.heads, 
+                                 transMilMlp_dim=args.mlp_dimension,
+                                 transMilDropout=args.dropout)
     elif args.deploy_model:
         #deploy 1 model on data
         deploy_categorical_model_(clini_table=args.clini_table,
@@ -48,12 +53,7 @@ def main():
                                   output_path=args.output_path,
                                   target_label=args.target_label,
                                   cat_labels=args.cat_labels,
-                                  cont_labels=args.cont_labels,
-                                  transMilDim=args.dimension,
-                                  transMilDepth=args.depth, 
-                                  transMilheads=args.heads, 
-                                  transMilMlp_dim=args.mlp_dimension, 
-                                  transMilDropout=args.dropout)
+                                  cont_labels=args.cont_labels)
 
     else:
         #run cross validation for n_splits models
