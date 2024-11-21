@@ -20,6 +20,12 @@ def main():
     group.add_argument("--one_model", action="store_true", help="Run full training instead of cross-validation")
     group.add_argument("--deploy_model", type=Path, help="Path to the model .pkl to deploy")
     group.add_argument("--n_splits", type=int, default=5, help="Number of splits")
+    group.add_argument("--dimension", type=int, default=512, help="Dimensions of model")
+    group.add_argument("--depth", type=int, default=2, help="Number of Layers")
+    group.add_argument("--heads", type=int, default=8, help="Heads")
+    group.add_argument("--mlp_dimension", type=int, default=512, help="mlp Dimensions of model")
+    group.add_argument("--dropout", type=float, default=.0, help="which percent gets droptout")
+
     
     args = parser.parse_args()
 
@@ -54,7 +60,12 @@ def main():
                               cat_labels=args.cat_labels,
                               cont_labels=args.cont_labels,
                               categories=args.categories,
-                              n_splits=args.n_splits)
+                              n_splits=args.n_splits,
+                              transMilDim=args.dimension,
+                              transMilDepth=args.depth, 
+                              transMilheads=args.heads, 
+                              transMilMlp_dim=args.mlp_dimension, 
+                              transMilDropout=args.dropout)
 
 
 if __name__ == "__main__":
