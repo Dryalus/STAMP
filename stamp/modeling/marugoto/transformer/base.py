@@ -35,7 +35,13 @@ def train(
     path: Optional[Path] = None,
     batch_size: int = 64,
     cores: int = 8,
-    plot: bool = False
+    plot: bool = False,
+    transMilDim: int = 512,
+    transMilDepth: int = 2, 
+    transMilheads: int = 8, 
+    transMilMlp_dim: int = 512, 
+    transMilDropout: float =.0
+    
 ) -> Learner:
     """Train a MLP on image features.
 
@@ -83,7 +89,7 @@ def train(
     # for binary classification num_classes=2
     model = TransMIL(
         num_classes=len(target_enc.categories_[0]), input_dim=feature_dim,
-        dim=512, depth=2, heads=8, mlp_dim=512, dropout=.0
+        dim=transMilDim, depth=transMilDepth, heads=transMilHeads, mlp_dim=transMilMlp_dim, dropout=transMilDropout
     )
     # TODO:
     # maybe increase mlp_dim? Not necessary 4*dim, but maybe a bit?
