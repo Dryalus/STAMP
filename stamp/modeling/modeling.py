@@ -48,7 +48,12 @@ def main():
                                   output_path=args.output_path,
                                   target_label=args.target_label,
                                   cat_labels=args.cat_labels,
-                                  cont_labels=args.cont_labels)
+                                  cont_labels=args.cont_labels,
+                                  transMilDim=args.dimension,
+                                  transMilDepth=args.depth, 
+                                  transMilheads=args.heads, 
+                                  transMilMlp_dim=args.mlp_dimension, 
+                                  transMilDropout=args.dropout)
 
     else:
         #run cross validation for n_splits models
