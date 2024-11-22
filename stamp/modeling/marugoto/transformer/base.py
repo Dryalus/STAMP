@@ -40,7 +40,9 @@ def train(
     transMilDepth: int = 2, 
     transMilheads: int = 8, 
     transMilMlp_dim: int = 512, 
-    transMilDropout: float =.0
+    transMilDropout: float =.0,
+    lr_max: float=1e-4, 
+    wd: float=1e-2
     
 ) -> Learner:
     """Train a MLP on image features.
@@ -126,7 +128,7 @@ def train(
         CSVLogger(),
         # MixedPrecision(amp_mode=AMPMode.BF16)
     ]
-    learn.fit_one_cycle(n_epoch=n_epoch, reset_opt=True, lr_max=1e-4, wd=1e-2, cbs=cbs)
+    learn.fit_one_cycle(n_epoch=n_epoch, reset_opt=True, lr_max=lr_max, wd=wd, cbs=cbs)
     # lr_max: lerning rate max can handel arrays
     # wd: weight decay
     # https://docs.fast.ai/callback.schedule.html#learner.fit_one_cycle
