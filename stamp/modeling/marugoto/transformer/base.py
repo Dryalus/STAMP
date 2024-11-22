@@ -127,6 +127,9 @@ def train(
         # MixedPrecision(amp_mode=AMPMode.BF16)
     ]
     learn.fit_one_cycle(n_epoch=n_epoch, reset_opt=True, lr_max=1e-4, wd=1e-2, cbs=cbs)
+    # lr_max: lerning rate max can handel arrays
+    # wd: weight decay
+    # https://docs.fast.ai/callback.schedule.html#learner.fit_one_cycle
     
     # Plot training and validation losses as well as learning rate schedule
     if plot:
