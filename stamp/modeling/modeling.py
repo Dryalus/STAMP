@@ -26,7 +26,7 @@ def main():
     group.add_argument("--mlp_dimension", type=int, default=512, help="mlp Dimensions of model")
     group.add_argument("--dropout", type=float, default=.0, help="which percent gets droptout")
     group.add_argument("--lr_max", type=float, default=.1, help="lernraten maximum")
-    group.add_argument("--wd", type=float, default=.1, help="")
+    group.add_argument("--wd", type=float, default=.1, help="wight decay")
 
     
     args = parser.parse_args()
