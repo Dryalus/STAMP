@@ -25,6 +25,8 @@ def main():
     group.add_argument("--heads", type=int, default=8, help="Heads")
     group.add_argument("--mlp_dimension", type=int, default=512, help="mlp Dimensions of model")
     group.add_argument("--dropout", type=float, default=.0, help="which percent gets droptout")
+    group.add_argument("--lr_max", type=float, default=.1, help="lernraten maximum")
+    group.add_argument("--wd", type=float, default=.1, help="")
 
     
     args = parser.parse_args()
@@ -43,7 +45,9 @@ def main():
                                  transMilDepth=args.depth, 
                                  transMilheads=args.heads, 
                                  transMilMlp_dim=args.mlp_dimension,
-                                 transMilDropout=args.dropout)
+                                 transMilDropout=args.dropout,
+                                 lr_max = args.lr_max, 
+                                 wd = args.wd)
     elif args.deploy_model:
         #deploy 1 model on data
         deploy_categorical_model_(clini_table=args.clini_table,
@@ -70,7 +74,9 @@ def main():
                               transMilDepth=args.depth, 
                               transMilheads=args.heads, 
                               transMilMlp_dim=args.mlp_dimension, 
-                              transMilDropout=args.dropout)
+                              transMilDropout=args.dropout,
+                              lr_max = args.lr_max, 
+                              wd = args.wd)
 
 
 if __name__ == "__main__":
