@@ -35,6 +35,9 @@ modeling:
   heads: 8
   mlp_dimension: 512
   dropout: 0
+  lr_max: .1
+  wd: .1
+  
   
   statistics:
     pred_csvs: # Paths to prediction CSVs to plot ROC curves for
