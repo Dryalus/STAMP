@@ -36,7 +36,7 @@ modeling:
   mlp_dimension: 512
   dropout: 0
   lr_max: 0.02
-  wd: 0.004
+  wd: 0.0004
   
   
   statistics:
