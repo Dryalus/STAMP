@@ -143,13 +143,13 @@ def train_categorical_model_(
         valid_idxs=df.PATIENT.isin(valid_patients).values,
         path=output_path,
         cores=max(1, os.cpu_count() // 4),
-        transMilDim: int = 512,
-        transMilDepth: int = 2, 
-        transMilheads: int = 8, 
-        transMilMlp_dim: int = 512, 
-        transMilDropout: float =.0,
-        lr_max: float=1e-4, 
-        wd: float=1e-2
+        transMilDim = transMilDim, 
+        transMilDepth = transMilDepth, 
+        transMilheads = transMilheads, 
+        transMilMlp_dim = transMilMlp_dim, 
+        transMilDropout = transMilDropout,
+        lr_max = lr_max, 
+        wd = wd
     )
 
     # save some additional information to the learner to make deployment easier
