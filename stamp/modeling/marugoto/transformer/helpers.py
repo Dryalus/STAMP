@@ -143,13 +143,13 @@ def train_categorical_model_(
         valid_idxs=df.PATIENT.isin(valid_patients).values,
         path=output_path,
         cores=max(1, os.cpu_count() // 4),
-        transMilDim = transMilDim,
-        transMilDepth = transMilDepth, 
-        transMilheads = transMilheads, 
-        transMilMlp_dim = transMilMlp_dim, 
-        transMilDropout = transMilDropout,
-        lr_max = lr_max, 
-        wd = wd
+        transMilDim: int = 512,
+        transMilDepth: int = 2, 
+        transMilheads: int = 8, 
+        transMilMlp_dim: int = 512, 
+        transMilDropout: float =.0,
+        lr_max: float=1e-4, 
+        wd: float=1e-2
     )
 
     # save some additional information to the learner to make deployment easier
@@ -246,6 +246,13 @@ def categorical_crossval_(
     cont_labels: Sequence[str] = [],
     n_splits: int = 5,
     categories: Optional[Iterable[str]] = None,
+    transMilDim = transMilDim,
+    transMilDepth = transMilDepth, 
+    transMilheads = transMilheads, 
+    transMilMlp_dim = transMilMlp_dim, 
+    transMilDropout = transMilDropout,
+    lr_max = lr_max, 
+    wd = wd
 ) -> None:
     """Performs a cross-validation for a categorical target.
 
@@ -343,7 +350,14 @@ def categorical_crossval_(
             learn = _crossval_train(
                 fold_path=fold_path, fold_df=fold_train_df, fold=fold, info=info,
                 target_label=target_label, target_enc=target_enc,
-                cat_labels=cat_labels, cont_labels=cont_labels)
+                cat_labels=cat_labels, cont_labels=cont_labels,
+                transMilDim = transMilDim,
+                transMilDepth = transMilDepth, 
+                transMilheads = transMilheads, 
+                transMilMlp_dim = transMilMlp_dim, 
+                transMilDropout = transMilDropout,
+                lr_max = lr_max, 
+                wd = wd)
             learn.export()
 
         fold_test_df = df.iloc[test_idxs]
@@ -356,7 +370,14 @@ def categorical_crossval_(
 
 
 def _crossval_train(
-    *, fold_path, fold_df, fold, info, target_label, target_enc, cat_labels, cont_labels
+    *, fold_path, fold_df, fold, info, target_label, target_enc, cat_labels, cont_labels,
+        transMilDim = transMilDim, 
+        transMilDepth = transMilDepth, 
+        transMilheads = transMilheads, 
+        transMilMlp_dim = transMilMlp_dim, 
+        transMilDropout = transMilDropout,
+        lr_max = lr_max, 
+        wd = wd
 ):
     """Helper function for training the folds."""
     assert fold_df.PATIENT.nunique() == len(fold_df)
