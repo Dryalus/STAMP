@@ -35,8 +35,8 @@ modeling:
   heads: 8
   mlp_dimension: 512
   dropout: 0
-  lr_max: .1
-  wd: .1
+  lr_max: 0.02
+  wd: 0.004
   
   
   statistics:
