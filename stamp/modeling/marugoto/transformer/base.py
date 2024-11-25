@@ -91,7 +91,7 @@ def train(
     # for binary classification num_classes=2
     model = TransMIL(
         num_classes=len(target_enc.categories_[0]), input_dim=feature_dim,
-        dim=transMilDim, depth=transMilDepth, heads=transMilHeads, mlp_dim=transMilMlp_dim, dropout=transMilDropout
+        dim=transMilDim, depth=transMilDepth, heads=transMilheads, mlp_dim=transMilMlp_dim, dropout=transMilDropout
     )
     # TODO:
     # maybe increase mlp_dim? Not necessary 4*dim, but maybe a bit?
