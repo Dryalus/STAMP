@@ -172,7 +172,7 @@ def main(
         preds, gradcam = gradcam_per_category(
             learn=learn, feats=feats, categories=categories
         )
-        gradcam_2d = vals_to_im(gradcam.permute(-1, -2), torch.div(coords, stride, rounding_mode='floor'), outpu_dir).detach()
+        gradcam_2d = vals_to_im(gradcam.permute(-1, -2), torch.div(coords, stride, rounding_mode='floor'), output_dir).detach()
 
         scores = torch.softmax(
             learn.model(feats.unsqueeze(-2), torch.ones((len(feats)))), dim=1
@@ -250,7 +250,7 @@ def main(
         df_qupath_gradcam.to_csv(slide_output_dir /f'qupath_gradcam-{slide_path.name}.csv', index=False)
 
         
-        scores_2d = vals_to_im(scores, torch.div(coords, stride, rounding_mode='floor'), outpu_dir).detach()
+        scores_2d = vals_to_im(scores, torch.div(coords, stride, rounding_mode='floor'), output_dir).detach()
         fig, axs = plt.subplots(nrows=2, ncols=max(2, len(categories)), figsize=(12, 8))
 
         show_class_map(
