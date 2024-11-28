@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import openslide
 import torch
+import pandas as pd
 from fastai.vision.learner import Learner, load_learner
 from jaxtyping import Float, Int
 from matplotlib.axes import Axes
@@ -15,7 +16,6 @@ from PIL import Image
 from torch import Tensor
 
 from stamp.preprocessing.helpers.common import supported_extensions
-
 
 def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
     # Check if any supported extension matches the file
@@ -34,6 +34,7 @@ def get_stride(coords: Tensor, output_dir: Path) -> int:
     coords_df.to_csv(output_dir + '{slide_name}_coords.csv',index=False)
     xs = coords[:, 0].unique(sorted=True)
     stride = (xs[1:] - xs[:-1]).min()
+    print("Stride is: ",stride.shape,stride)
     return stride
 
 
@@ -54,6 +55,7 @@ def gradcam_per_category(
 def vals_to_im(
     scores: Float[Tensor, "n_tiles *d_feats"],
     norm_coords: Int[Tensor, "n_tiles *d_feats"],
+    output_dir: Path
 ) -> Float[Tensor, "i j *d_feats"]:
     """Arranges scores in a 2d grid according to coordinates"""
     size = norm_coords.max(0).values.flip(0) + 1
@@ -64,6 +66,10 @@ def vals_to_im(
     flattened_im[flattened_coords] = scores
 
     im = flattened_im.reshape_as(im)
+
+    print("Scores is: ", scores.shape, scores)
+    scores_df= pd.DataFrame(scores)
+    scores_df.to_csv(output_dir + 'scores.csv', index=False)
 
     return im
 
@@ -166,12 +172,85 @@ def main(
         preds, gradcam = gradcam_per_category(
             learn=learn, feats=feats, categories=categories
         )
-        gradcam_2d = vals_to_im(gradcam.permute(-1, -2), torch.div(coords, stride, rounding_mode='floor')).detach()
+        gradcam_2d = vals_to_im(gradcam.permute(-1, -2), torch.div(coords, stride, rounding_mode='floor'), outpu_dir).detach()
 
         scores = torch.softmax(
             learn.model(feats.unsqueeze(-2), torch.ones((len(feats)))), dim=1
         )
-        scores_2d = vals_to_im(scores, torch.div(coords, stride, rounding_mode='floor')).detach()
+        # get row data for qupath visualization
+        print("Gradcam from main is: ", gradcam.shape, gradcam)
+        gradcam_df= pd.DataFrame(gradcam)
+        gradcam_df.to_csv(slide_output_dir /f'gradcam-{slide_path.name}.csv', index=False)
+
+        print("Scores from main is: ", scores.shape, scores)
+        scores_df= pd.DataFrame(scores)
+        scores_df.to_csv(slide_output_dir /f'scores-{slide_path.name}.csv', index=False)
+
+        print("Coords from main is: ", coords.shape, coords)
+        coords_df= pd.DataFrame(coords)
+        coords_df.to_csv(slide_output_dir /f'coords-{slide_path.name}.csv', index=False)
+
+        # Create csv-file for qupath visualization
+
+        #--------SCORES---------------------------
+
+        # Werte aus den CSV-Dateien extrahieren
+        column1 = coords_df.iloc[:, 0]
+        column2 = coords_df.iloc[:, 1]
+        column5 = scores_df.iloc[:, 0]
+        column6 = scores_df.iloc[:, 1]
+        column7 = scores_df.iloc[:, 2]
+        column8 = scores_df.iloc[:, 3]
+
+        # Konstante Werte entsprechend pixel der Tiles
+        column3 = [224] * len(column1)
+        column4 = [224] * len(column1)
+
+        # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
+        df_qupath_scores = pd.DataFrame({
+            'x': column1,
+            'y': column2,
+            'width': column3,
+            'height': column4,
+            'CN_high': column5,
+            'CN_low': column6,
+            'MSI': column7,
+            'POLE': column8
+        })
+
+        df_qupath_scores.to_excel(slide_output_dir /f'qupath_scores-{slide_path.name}.xlsx', index=False)
+        df_qupath_scores.to_csv(slide_output_dir /f'qupath_scores-{slide_path.name}.csv', index=False)
+
+        #-------GRADCAM--------------------------
+         # Werte aus den CSV-Dateien extrahieren
+        g_column1 = coords_df.iloc[:, 0]
+        g_column2 = coords_df.iloc[:, 1]
+        g_column5 = gradcam_df.iloc[:, 0]
+        g_column6 = gradcam_df.iloc[:, 1]
+        g_column7 = gradcam_df.iloc[:, 2]
+        g_column8 = gradcam_df.iloc[:, 3]
+
+        # Konstante Werte entsprechend pixel der Tiles
+        g_column3 = [224] * len(g_column1)
+        g_column4 = [224] * len(g_column1)
+
+        # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
+        df_qupath_gradcam = pd.DataFrame({
+            'x': g_column1,
+            'y': g_column2,
+            'width': g_column3,
+            'height': g_column4,
+            'CN_high': g_column5,
+            'CN_low': g_column6,
+            'MSI': g_column7,
+            'POLE': g_column8
+        })
+
+        df_qupath_gradcam.to_excel(slide_output_dir /f'qupath_gradcam-{slide_path.name}.xlsx', index=False)
+        df_qupath_gradcam.to_csv(slide_output_dir /f'qupath_gradcam-{slide_path.name}.csv', index=False)
+
+        
+        scores_2d = vals_to_im(scores, torch.div(coords, stride, rounding_mode='floor'), outpu_dir).detach()
         fig, axs = plt.subplots(nrows=2, ncols=max(2, len(categories)), figsize=(12, 8))
 
         show_class_map(
