@@ -31,7 +31,7 @@ def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
 def get_stride(coords: Tensor, output_dir: Path) -> int:
     print("Coords is: ", coords.shape, coords)
     coords_df= pd.DataFrame(coords)
-    coords_df.to_csv(output_dir + '{slide_name}_coords.csv',index=False)
+    coords_df.to_csv(str(output_dir) + '{slide_name}_coords.csv',index=False)
     xs = coords[:, 0].unique(sorted=True)
     stride = (xs[1:] - xs[:-1]).min()
     print("Stride is: ",stride.shape,stride)
@@ -69,7 +69,7 @@ def vals_to_im(
 
     print("Scores is: ", scores.shape, scores)
     scores_df= pd.DataFrame(scores)
-    scores_df.to_csv(output_dir + 'scores.csv', index=False)
+    scores_df.to_csv(str(output_dir) + 'scores.csv', index=False)
 
     return im
 
