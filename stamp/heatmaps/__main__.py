@@ -28,7 +28,10 @@ def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
         return openslide.open_slide(wsi_dir)
 
 
-def get_stride(coords: Tensor) -> int:
+def get_stride(coords: Tensor, output_dir: Path) -> int:
+    print("Coords is: ", coords.shape, coords)
+    coords_df= pd.DataFrame(coords)
+    coords_df.to_csv(output_dir + '{slide_name}_coords.csv',index=False)
     xs = coords[:, 0].unique(sorted=True)
     stride = (xs[1:] - xs[:-1]).min()
     return stride
@@ -158,7 +161,7 @@ def main(
             coords = torch.tensor(h5["coords"][:], dtype=torch.int)
 
         # stride is 224 using normal operations
-        stride = get_stride(coords)
+        stride = get_stride(coords, output_dir)
 
         preds, gradcam = gradcam_per_category(
             learn=learn, feats=feats, categories=categories
