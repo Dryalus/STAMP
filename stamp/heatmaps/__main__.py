@@ -200,7 +200,7 @@ def main(
         column5 = scores_df.iloc[:, 0]
         column6 = scores_df.iloc[:, 1]
         column7 = scores_df.iloc[:, 2]
-        column8 = scores_df.iloc[:, 3]
+        column8 = scores_df.iloc[:, 2]
 
         # Konstante Werte entsprechend pixel der Tiles
         column3 = [224] * len(column1)
