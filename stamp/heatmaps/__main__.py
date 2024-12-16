@@ -212,9 +212,9 @@ def main(
             'y': column2,
             'width': column3,
             'height': column4,
-            'CN_high': column5,
-            'CN_low': column6,
-            'MSI': column7,
+            'BaSq': column5,
+            'Lum': column6,
+            'Stroma': column7,
             'POLE': column8
         })
 
@@ -240,9 +240,9 @@ def main(
             'y': g_column2,
             'width': g_column3,
             'height': g_column4,
-            'CN_high': g_column5,
-            'CN_low': g_column6,
-            'MSI': g_column7,
+            'BaSq': g_column5,
+            'Lum': g_column6,
+            'Stroma': g_column7,
             'POLE': g_column8
         })
 
