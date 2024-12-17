@@ -210,6 +210,8 @@ def main(
         
         csvcat = ['x','y','width','height']
         for i, cat in enumerate(categories):
+            print(i)
+            print(cat)
             csvcat.append(cat)
             array.append(coords_df.iloc[:,i])
         
