@@ -226,9 +226,8 @@ def main(
             #'BaSq': column5,
             #'Lum': column6,
             #'Stroma': column7,
-            #POLE': column8
-                                        
-        })
+            #POLE': column8                                        
+        #})
 
         df_qupath_scores.to_excel(slide_output_dir /f'qupath_scores-{slide_path.name}.xlsx', index=False)
         df_qupath_scores.to_csv(slide_output_dir /f'qupath_scores-{slide_path.name}.csv', index=False)
