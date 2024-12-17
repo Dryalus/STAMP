@@ -192,30 +192,42 @@ def main(
 
         # Create csv-file for qupath visualization
 
-        #--------SCORES---------------------------
-
+        #--------SCORES---------------------------    
+        
         # Werte aus den CSV-Dateien extrahieren
         column1 = coords_df.iloc[:, 0]
         column2 = coords_df.iloc[:, 1]
         column5 = scores_df.iloc[:, 0]
-        column6 = scores_df.iloc[:, 1]
-        column7 = scores_df.iloc[:, 2]
-        column8 = scores_df.iloc[:, 2]
+        #column6 = scores_df.iloc[:, 1]
+        #column7 = scores_df.iloc[:, 2]
+        #column8 = scores_df.iloc[:, 2]
 
         # Konstante Werte entsprechend pixel der Tiles
         column3 = [224] * len(column1)
         column4 = [224] * len(column1)
 
+        array = [column1, column2, column3, column4, column5]
+        
+        csvcat = ['x','y','width','height']
+        for i, cat in enumerate(categories):
+            csvcat.append(cat)
+            array.append(coords_df.iloc[:,i])
+        
+        print(csvcat)
+        array = np.array(array)
+
+        df_qupath_scores = pd.DataFrame(array, columns=csvcat)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
-        df_qupath_scores = pd.DataFrame({
-            'x': column1,
-            'y': column2,
-            'width': column3,
-            'height': column4,
-            'BaSq': column5,
-            'Lum': column6,
-            'Stroma': column7,
-            'POLE': column8
+        #df_qupath_scores = pd.DataFrame({
+            #'x': column1,
+            #'y': column2,
+            #'width': column3,
+            #'height': column4,
+            #'BaSq': column5,
+            #'Lum': column6,
+            #'Stroma': column7,
+            #POLE': column8
+                                        
         })
 
         df_qupath_scores.to_excel(slide_output_dir /f'qupath_scores-{slide_path.name}.xlsx', index=False)
@@ -228,7 +240,7 @@ def main(
         g_column5 = gradcam_df.iloc[:, 0]
         g_column6 = gradcam_df.iloc[:, 1]
         g_column7 = gradcam_df.iloc[:, 2]
-        g_column8 = gradcam_df.iloc[:, 3]
+        #g_column8 = gradcam_df.iloc[:, 3]
 
         # Konstante Werte entsprechend pixel der Tiles
         g_column3 = [224] * len(g_column1)
@@ -243,7 +255,7 @@ def main(
             'BaSq': g_column5,
             'Lum': g_column6,
             'Stroma': g_column7,
-            'POLE': g_column8
+            #'POLE': g_column8
         })
 
         df_qupath_gradcam.to_excel(slide_output_dir /f'qupath_gradcam-{slide_path.name}.xlsx', index=False)
