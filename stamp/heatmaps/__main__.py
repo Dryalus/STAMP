@@ -217,6 +217,7 @@ def main(
         
         print(csvcat)
         array = np.array(array)
+        array = array.transpose()
 
         df_qupath_scores = pd.DataFrame(array, columns=csvcat)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
