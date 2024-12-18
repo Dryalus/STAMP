@@ -248,20 +248,18 @@ def main(
         g_column3 = [224] * len(g_column1)
         g_column4 = [224] * len(g_column1)
 
-        g_array = [g_column1, g_column2, g_column3, g_column4]
-        
-        g_csvcat = ['x','y','width','height']
+        data = {
+            'x': g_column1,
+            'y': g_column2,
+            'width': g_column3,
+            'height': g_column4
+        }
         for i, cat in enumerate(categories):
             print(i)
             print(cat)
-            g_csvcat.append(cat)
-            g_array.append(gradcam_df.iloc[:,i])
-        
-        print(g_csvcat)
-        g_array = np.array(g_array)
-        g_array = g_array.transpose()
+            data[cat] = gradcam_df.iloc[:,i]
 
-        df_qupath_scores = pd.DataFrame(g_array, columns=g_csvcat)
+        df_qupath_scores = pd.DataFrame(data=data)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
         #df_qupath_gradcam = pd.DataFrame({
             #'x': g_column1,
