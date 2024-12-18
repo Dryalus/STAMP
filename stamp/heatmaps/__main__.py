@@ -255,11 +255,11 @@ def main(
             print(i)
             print(cat)
             g_csvcat.append(cat)
-            g_array.append(scores_df.iloc[:,i])
+            g_array.append(gradcam_df.iloc[:,i])
         
-        print(csvcat)
-        g_array = np.array(array)
-        g_array = array.transpose()
+        print(g_csvcat)
+        g_array = np.array(g_array)
+        g_array = g_array.transpose()
 
         df_qupath_scores = pd.DataFrame(g_array, columns=g_csvcat)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
