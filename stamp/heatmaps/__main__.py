@@ -259,7 +259,7 @@ def main(
             print(cat)
             data[cat] = gradcam_df.iloc[:,i]
 
-        df_qupath_scores = pd.DataFrame(data=data)
+        df_qupath_gradcam = pd.DataFrame(data=data)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
         #df_qupath_gradcam = pd.DataFrame({
             #'x': g_column1,
