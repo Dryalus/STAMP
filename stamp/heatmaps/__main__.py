@@ -197,7 +197,7 @@ def main(
         # Werte aus den CSV-Dateien extrahieren
         column1 = coords_df.iloc[:, 0]
         column2 = coords_df.iloc[:, 1]
-        column5 = scores_df.iloc[:, 0]
+        #column5 = scores_df.iloc[:, 0]
         #column6 = scores_df.iloc[:, 1]
         #column7 = scores_df.iloc[:, 2]
         #column8 = scores_df.iloc[:, 2]
@@ -213,7 +213,7 @@ def main(
             print(i)
             print(cat)
             csvcat.append(cat)
-            array.append(coords_df.iloc[:,i])
+            array.append(scores_df.iloc[:,i])
         
         print(csvcat)
         array = np.array(array)
