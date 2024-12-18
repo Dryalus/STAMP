@@ -239,26 +239,40 @@ def main(
          # Werte aus den CSV-Dateien extrahieren
         g_column1 = coords_df.iloc[:, 0]
         g_column2 = coords_df.iloc[:, 1]
-        g_column5 = gradcam_df.iloc[:, 0]
-        g_column6 = gradcam_df.iloc[:, 1]
-        g_column7 = gradcam_df.iloc[:, 2]
+        #g_column5 = gradcam_df.iloc[:, 0]
+        #g_column6 = gradcam_df.iloc[:, 1]
+        #g_column7 = gradcam_df.iloc[:, 2]
         #g_column8 = gradcam_df.iloc[:, 3]
 
         # Konstante Werte entsprechend pixel der Tiles
         g_column3 = [224] * len(g_column1)
         g_column4 = [224] * len(g_column1)
 
+        g_array = [g_column1, g_column2, g_column3, g_column4]
+        
+        g_csvcat = ['x','y','width','height']
+        for i, cat in enumerate(categories):
+            print(i)
+            print(cat)
+            g_csvcat.append(cat)
+            g_array.append(scores_df.iloc[:,i])
+        
+        print(csvcat)
+        g_array = np.array(array)
+        g_array = array.transpose()
+
+        df_qupath_scores = pd.DataFrame(g_array, columns=g_csvcat)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
-        df_qupath_gradcam = pd.DataFrame({
-            'x': g_column1,
-            'y': g_column2,
-            'width': g_column3,
-            'height': g_column4,
-            'BaSq': g_column5,
-            'Lum': g_column6,
-            'Stroma': g_column7,
+        #df_qupath_gradcam = pd.DataFrame({
+            #'x': g_column1,
+            #'y': g_column2,
+            #'width': g_column3,
+            #'height': g_column4,
+            #'BaSq': g_column5,
+            #'Lum': g_column6,
+            #'Stroma': g_column7,
             #'POLE': g_column8
-        })
+        #})
 
         df_qupath_gradcam.to_excel(slide_output_dir /f'qupath_gradcam-{slide_path.name}.xlsx', index=False)
         df_qupath_gradcam.to_csv(slide_output_dir /f'qupath_gradcam-{slide_path.name}.csv', index=False)
