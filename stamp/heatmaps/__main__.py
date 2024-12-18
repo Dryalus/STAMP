@@ -206,7 +206,7 @@ def main(
         column3 = [224] * len(column1)
         column4 = [224] * len(column1)
 
-        array = [column1, column2, column3, column4, column5]
+        array = [column1, column2, column3, column4]
         
         csvcat = ['x','y','width','height']
         for i, cat in enumerate(categories):
