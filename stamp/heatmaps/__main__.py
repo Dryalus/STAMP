@@ -204,18 +204,18 @@ def main(
 
         # Scales
         xmin = min(column1)
-        print(xmin)
+        print(f"xmin: {xmin}")
         xmin2 = min(filter(lambda x: x>xmin, column1))
-        print(xmin2)
+        print(f"xmin2: {xmin2}")
         xscale = xmin2 - xmin
-        print(xscale)
+        print(f"xscale: {xscale}")
 
         ymin = min(column2)
-        print(ymin)
+        print(f"ymin: {ymin}")
         ymin2 = min(filter(lambda y: y>ymin, column2))
-        print(ymin2)
+        print(f"ymin2: {ymin2}")
         yscale = ymin2 - ymin
-        print(yscale)
+        print(f"yscale: {yscale}")
 
         # Konstante Werte entsprechend pixel der Tiles
         column3 = [xscale] * len(column1)
@@ -230,7 +230,7 @@ def main(
         for i, cat in enumerate(categories):
             print(i)
             print(cat)
-            data[cat] = coords_df.iloc[:,i]
+            data[cat] = scores_df.iloc[:,i]
 
         df_qupath_scores = pd.DataFrame(data=data)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
@@ -258,8 +258,8 @@ def main(
         #g_column8 = gradcam_df.iloc[:, 3]
 
         # Konstante Werte entsprechend pixel der Tiles
-        g_column3 = [224] * len(g_column1)
-        g_column4 = [224] * len(g_column1)
+        g_column3 = [xscale] * len(g_column1)
+        g_column4 = [yscale] * len(g_column1)
 
         g_data = {
             'x': g_column1,
