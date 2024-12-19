@@ -17,6 +17,17 @@ from torch import Tensor
 
 from stamp.preprocessing.helpers.common import supported_extensions
 
+# Added Minimal Distance in Array
+def minDistance(colum):
+    mindis = max(colum)
+    xmin = min(colum)
+    while xmin < max(colum):
+        xmin2 = min(filter(lambda x: x > xmin, colum))
+        if xmin2 - xmin < mindis:
+            mindis = xmin2 - xmin
+        xmin = xmin2
+    return mindis
+
 def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
     # Check if any supported extension matches the file
     if wsi_dir.suffix not in supported_extensions:
@@ -203,18 +214,11 @@ def main(
         #column8 = scores_df.iloc[:, 2]
 
         # Scales
-        xmin = min(column1)
-        print(f"xmin: {xmin}")
-        xmin2 = min(filter(lambda x: x>xmin, column1))
-        print(f"xmin2: {xmin2}")
-        xscale = xmin2 - xmin
+        
+        xscale = minDistance(column1)
         print(f"xscale: {xscale}")
 
-        ymin = min(column2)
-        print(f"ymin: {ymin}")
-        ymin2 = min(filter(lambda y: y>ymin, column2))
-        print(f"ymin2: {ymin2}")
-        yscale = ymin2 - ymin
+        yscale = minDistance(column2)
         print(f"yscale: {yscale}")
 
         # Konstante Werte entsprechend pixel der Tiles
