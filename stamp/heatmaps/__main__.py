@@ -206,20 +206,18 @@ def main(
         column3 = [224] * len(column1)
         column4 = [224] * len(column1)
 
-        array = [column1, column2, column3, column4]
-        
-        csvcat = ['x','y','width','height']
+        data = {
+            'x': column1,
+            'y': column2,
+            'width': column3,
+            'height': column4
+        }
         for i, cat in enumerate(categories):
             print(i)
             print(cat)
-            csvcat.append(cat)
-            array.append(scores_df.iloc[:,i])
-        
-        print(csvcat)
-        array = np.array(array)
-        array = array.transpose()
+            data[cat] = coords_df.iloc[:,i]
 
-        df_qupath_scores = pd.DataFrame(array, columns=csvcat)
+        df_qupath_scores = pd.DataFrame(data=data)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
         #df_qupath_scores = pd.DataFrame({
             #'x': column1,
@@ -248,7 +246,7 @@ def main(
         g_column3 = [224] * len(g_column1)
         g_column4 = [224] * len(g_column1)
 
-        data = {
+        g_data = {
             'x': g_column1,
             'y': g_column2,
             'width': g_column3,
@@ -257,9 +255,9 @@ def main(
         for i, cat in enumerate(categories):
             print(i)
             print(cat)
-            data[cat] = gradcam_df.iloc[:,i]
+            g_data[cat] = gradcam_df.iloc[:,i]
 
-        df_qupath_gradcam = pd.DataFrame(data=data)
+        df_qupath_gradcam = pd.DataFrame(data=g_data)
         # DataFrame mit Spalten erstellen --> Labels für Spalte 5-x
         #df_qupath_gradcam = pd.DataFrame({
             #'x': g_column1,
