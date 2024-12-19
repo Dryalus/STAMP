@@ -202,9 +202,24 @@ def main(
         #column7 = scores_df.iloc[:, 2]
         #column8 = scores_df.iloc[:, 2]
 
+        # Scales
+        xmin = min(column1)
+        print(xmin)
+        xmin2 = min(filter(lambda x: x>xmin, column1))
+        print(xmin2)
+        xscale = xmin2 - xmin
+        print(xscale)
+
+        ymin = min(column2)
+        print(ymin)
+        ymin2 = min(filter(lambda y: y>ymin, column2))
+        print(ymin2)
+        yscale = ymin2 - ymin
+        print(yscale)
+
         # Konstante Werte entsprechend pixel der Tiles
-        column3 = [224] * len(column1)
-        column4 = [224] * len(column1)
+        column3 = [xscale] * len(column1)
+        column4 = [yscale] * len(column2)
 
         data = {
             'x': column1,
