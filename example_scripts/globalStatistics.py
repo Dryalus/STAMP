@@ -116,7 +116,7 @@ def getHighestAvgScore(scoreDic):
 def mainProcess():
     listNmax, listdecay, valueArray = getFileStrukture(path)
     aucScoreMean, aucScoreLow, aucScoreHigh, avgPrecScoreMean, avgPrecScoreLow, avgPrecScoreHigh = sortToDics(valueArray)
-    #createBarchart(listNmax, listdecay, aucScoreMean)
+    createBarchart(listNmax, listdecay, aucScoreMean)
     highestInd = getHighestAvgScore(aucScoreMean)
     print(f"highest auc score Nmax: {listNmax[highestInd[0]]}, Decay: {listdecay[highestInd[1]]}")
 
