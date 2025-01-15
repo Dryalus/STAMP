@@ -176,6 +176,9 @@ def main(
 
     # for h5_path in feature_dir.glob(f"**/{slide_name}.h5"):
     for slide_path in wsi_dir.glob(f"**/{slide_name}.*"):
+        
+        slide = load_slide_ext(slide_path)
+        
         h5_path = feature_dir / slide_path.with_suffix(".h5").name
         slide_output_dir = output_dir / h5_path.stem
         slide_output_dir.mkdir(exist_ok=True, parents=True)
@@ -310,7 +313,7 @@ def main(
             categories=categories,
         )
 
-        slide = load_slide_ext(slide_path)
+        #slide = load_slide_ext(slide_path)
 
         for ax, (pos_idx, category) in zip(axs[1, :], enumerate(categories)):
             ax: Axes
