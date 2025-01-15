@@ -214,14 +214,6 @@ def main(
         # Create csv-file for qupath visualization
 
         #--------SCORES---------------------------    
-        
-        # Werte aus den CSV-Dateien extrahieren
-        column1 = coords_df.iloc[:, 0]
-        column2 = coords_df.iloc[:, 1]
-        #column5 = scores_df.iloc[:, 0]
-        #column6 = scores_df.iloc[:, 1]
-        #column7 = scores_df.iloc[:, 2]
-        #column8 = scores_df.iloc[:, 2]
 
         # Scales
         
@@ -230,10 +222,18 @@ def main(
 
         yscale = scalingFactor(slide, stride)
         print(f"yscale: {yscale}")
+        
+        # Werte aus den CSV-Dateien extrahieren
+        column1 = [xscale] * coords_df.iloc[:, 0]
+        column2 = [yscale] * coords_df.iloc[:, 1]
+        #column5 = scores_df.iloc[:, 0]
+        #column6 = scores_df.iloc[:, 1]
+        #column7 = scores_df.iloc[:, 2]
+        #column8 = scores_df.iloc[:, 2]
 
         # Konstante Werte entsprechend pixel der Tiles
-        column3 = [xscale] * len(column1)
-        column4 = [yscale] * len(column2)
+        column3 = [xscale*224] * len(column1)
+        column4 = [yscale*224] * len(column2)
 
         data = {
             'x': column1,
@@ -264,8 +264,8 @@ def main(
 
         #-------GRADCAM--------------------------
          # Werte aus den CSV-Dateien extrahieren
-        g_column1 = coords_df.iloc[:, 0]
-        g_column2 = coords_df.iloc[:, 1]
+        g_column1 = [xscale] * coords_df.iloc[:, 0]
+        g_column2 = [yscale] * coords_df.iloc[:, 1]
         #g_column5 = gradcam_df.iloc[:, 0]
         #g_column6 = gradcam_df.iloc[:, 1]
         #g_column7 = gradcam_df.iloc[:, 2]
