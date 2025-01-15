@@ -18,7 +18,7 @@ from torch import Tensor
 from stamp.preprocessing.helpers.common import supported_extensions
 
 # Added Minimal Distance in Array
-def minDistance(colum):
+def scalingFactor(slide, stride):
     #mindis = max(colum)
     #xmin = min(colum)
     #while xmin < max(colum):
@@ -28,12 +28,10 @@ def minDistance(colum):
     #    xmin = xmin2
     #return mindis
     
-     slide_mpp = float(slide.properties[openslide.PROPERTY_NAME_MPP_X])
+    slide_mpp = float(slide.properties[openslide.PROPERTY_NAME_MPP_X])
     # determine the scaling factor between heatmap and original slide
     # 256 microns edge length by default, with 224px = ~1.14 MPP (± 10x magnification)
-    feature_downsample_mpp = (
-        256 / stride
-    )  # NOTE: stride here only makes sense if the tiles were NON-OVERLAPPING
+    feature_downsample_mpp = (256 / stride)  # NOTE: stride here only makes sense if the tiles were NON-OVERLAPPING
     scaling_factor = feature_downsample_mpp / slide_mpp
     return scaling_factor
 
@@ -224,10 +222,10 @@ def main(
 
         # Scales
         
-        xscale = minDistance(column1)
+        xscale = scalingFactor(slide, stride)
         print(f"xscale: {xscale}")
 
-        yscale = minDistance(column2)
+        yscale = scalingFactor(slide, stride)
         print(f"yscale: {yscale}")
 
         # Konstante Werte entsprechend pixel der Tiles
