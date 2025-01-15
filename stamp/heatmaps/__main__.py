@@ -33,7 +33,7 @@ def scalingFactor(slide, stride):
     # 256 microns edge length by default, with 224px = ~1.14 MPP (± 10x magnification)
     feature_downsample_mpp = (256 / stride)  # NOTE: stride here only makes sense if the tiles were NON-OVERLAPPING
     scaling_factor = feature_downsample_mpp / slide_mpp
-    return scaling_factor
+    return float(scaling_factor)
 
 def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
     # Check if any supported extension matches the file
