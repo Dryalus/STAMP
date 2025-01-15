@@ -19,14 +19,23 @@ from stamp.preprocessing.helpers.common import supported_extensions
 
 # Added Minimal Distance in Array
 def minDistance(colum):
-    mindis = max(colum)
-    xmin = min(colum)
-    while xmin < max(colum):
-        xmin2 = min(filter(lambda x: x > xmin, colum))
-        if xmin2 - xmin < mindis:
-            mindis = xmin2 - xmin
-        xmin = xmin2
-    return mindis
+    #mindis = max(colum)
+    #xmin = min(colum)
+    #while xmin < max(colum):
+    #    xmin2 = min(filter(lambda x: x > xmin, colum))
+    #    if xmin2 - xmin < mindis:
+    #        mindis = xmin2 - xmin
+    #    xmin = xmin2
+    #return mindis
+    
+     slide_mpp = float(slide.properties[openslide.PROPERTY_NAME_MPP_X])
+    # determine the scaling factor between heatmap and original slide
+    # 256 microns edge length by default, with 224px = ~1.14 MPP (± 10x magnification)
+    feature_downsample_mpp = (
+        256 / stride
+    )  # NOTE: stride here only makes sense if the tiles were NON-OVERLAPPING
+    scaling_factor = feature_downsample_mpp / slide_mpp
+    return scaling_factor
 
 def load_slide_ext(wsi_dir: Path) -> openslide.OpenSlide:
     # Check if any supported extension matches the file
