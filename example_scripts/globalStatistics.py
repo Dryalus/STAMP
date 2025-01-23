@@ -4,7 +4,7 @@ from matplotlib import cm
 import csv
 import os
 
-path = "test"
+path = "test" # Path to model_statistics were ms are saved
 
 def addDicEntry(dic, key, entry):
     if key in dic:
