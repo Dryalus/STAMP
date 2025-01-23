@@ -47,7 +47,7 @@ modeling:
     pred_csvs: # Paths to prediction CSVs to plot ROC curves for
       - ${modeling.output_dir}/fold-0/patient-preds.csv # only need 1 path when fully training (remove second one)
       - ${modeling.output_dir}/fold-1/patient-preds.csv # for cross-validation, you will have fold-0, fold-1, fold-k, add below
-      - ${modeling.output_dir}/fold-2/patient-preds.csv
+      - ${modeling.output_dir}/fold-2/patient-preds.csv # default path for cross-validation
       - ${modeling.output_dir}/fold-3/patient-preds.csv
       - ${modeling.output_dir}/fold-4/patient-preds.csv
     target_label: ${modeling.target_label} # Target label
