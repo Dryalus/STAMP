@@ -22,21 +22,25 @@ modeling:
   clini_table: # Path to clini_table file (.xlsx or .csv)
   slide_table: # Path to slide_table file (.xlsx or .csv)
   feature_dir: ${preprocessing.output_dir}/STAMP_macenko_xiyuewang-ctranspath-7c998680 # Path to feature directory
-  output_dir: # Path to output directory
+  output_dir: /output # Path to output directory # Needs to end on output when skript modauto.sh is used
   target_label: # Target label. No spaces allowed! Format clinical table accordingly
   categories: [] # Categories (list), leave empty to automatically infer based on unique values in the target_label column
   cat_labels: [] # Extra input category labels (list, can be empty)
   cont_labels: [] # Extra input continuous labels (list, can be empty)
   n_splits: 5 # Number of splits for cross-validation (only applicable to cross-validation)
+
+    # Deploying
   model_path: /path/to/export.pkl # Path to saved model (only applicable to deployment)
   deploy_feature_dir: # Path to directory containing the external cohort features (only applicable to deployment)
+  
+    # Hyperparams
   dimension: 512
   depth: 2
   heads: 8
   mlp_dimension: 512
   dropout: 0
-  lr_max: 0.02
-  wd: 0.0004
+  lr_max: 0.02 # max lernrate (default 0.02)
+  wd: 0.0004 # wight decay (default 0.0004)
   
   
   statistics:
@@ -45,7 +49,7 @@ modeling:
       - another/path/to/patient-preds.csv # for cross-validation, you will have fold-0, fold-1, fold-k, add below
     target_label: ${modeling.target_label} # Target label
     true_class: # Class to consider as positive
-    output_dir: /path/to/store/model_statistics # Path to save ROC curve and statistics to
+    output_dir: /path/to/store/model_statistics # Path to save ROC curve and statistics to # Needs to end on model_statistics when skript modauto.sh is used
 
 heatmaps:
   slide_name: # Name of the slide to create heatmaps for, wildcards allowed, no file extensions
