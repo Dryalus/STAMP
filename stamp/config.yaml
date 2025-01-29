@@ -55,7 +55,7 @@ modeling:
     output_dir: /path/to/store/model_statistics # Path to save ROC curve and statistics to # Needs to end on model_statistics when skript modauto.sh is used
 
 heatmaps:
-  slide_name: # Name of the slide to create heatmaps for, wildcards allowed, no file extensions
+  slide_name: * # Name of the slide to create heatmaps for, wildcards allowed, no file extensions
   feature_dir: ${preprocessing.output_dir}/STAMP_macenko_xiyuewang-ctranspath-7c998680 # Path to feature directory
   wsi_dir: # Path to whole-slide image directory within the container.
   model_path: /path/to/export.pkl # Path to saved model (only applicable to deployment)
